@@ -11,50 +11,7 @@ class App {
   }
 
   /*
-   *  This was the first attempt at this problem. It recursively creates all the strings
-   *  that are possible in an n-day span while eliminating the strings that don't qualify
-   *  as prize strings as it goes. It generates the correct number of strings, but takes
-   *  far too long to be useful (~300k ms) for a 30-day string.
-   */
-  recursiveCalculation(day, optionIdx, str) {
-    if (day === this.totalDays) {
-      return 1;
-    }
-
-    if (optionIdx === this.options.length) {
-      return 0;
-    }
-
-    if (this.options[optionIdx] === 'A' && day > 1) {
-      if (str.charAt(day - 1) === 'A' && str.charAt(day - 2) === 'A') {
-        return this.recursiveCalculation(day, optionIdx + 1, str);
-      }
-    }
-
-    if (this.options[optionIdx] === 'L') {
-      for (let i = 0; i < day; i += 1) {
-        if (str.charAt(i) === 'L') {
-          return 0;
-        }
-      }
-    }
-
-    const newStr = str + this.options[optionIdx];
-
-    return (
-      this.recursiveCalculation(day, optionIdx + 1, str) +
-      this.recursiveCalculation(day + 1, 0, newStr)
-    );
-  }
-
-  runOrganic() {
-    const startingDay = 0;
-    const startingIdx = 0;
-    return this.recursiveCalculation(startingDay, startingIdx, '');
-  }
-
-  /*
-   *  This was the second attempted, assited by referencing the approach/algorithm from:
+   *  This was the attempt, assisted by referencing the approach/algorithm from:
    *  http://jsomers.net/blog/project-euler-problem-191-or-how-i-learned-to-stop-counting-and-love-induction
    *  to point me in the right direction, specifically the six categories and the use of induction,
    *  I was able to arrive at this solution. This solution is much more elegant, as it's only a few
@@ -89,7 +46,7 @@ class App {
    *    cat6      => nPrizeStr
    */
   run() {
-    // Seed the algorithm with the values from n=1
+    // Seed the algorithm with the values from day=1
     let day = 1;
     let nPrizeStr = 3;
     let cat1 = 0;
